@@ -3,8 +3,8 @@ package audio
 import (
 	"errors"
 
-	"github.com/pion/mediadevices/pkg/io"
-	"github.com/pion/mediadevices/pkg/wave"
+	"github.com/cpdevs/mediadevices/pkg/io"
+	"github.com/cpdevs/mediadevices/pkg/wave"
 )
 
 var errEmptySource = errors.New("Source can't be nil")

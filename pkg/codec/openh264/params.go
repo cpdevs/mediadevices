@@ -1,9 +1,11 @@
 package openh264
 
 import (
-	"github.com/pion/mediadevices/pkg/codec"
-	"github.com/pion/mediadevices/pkg/io/video"
-	"github.com/pion/mediadevices/pkg/prop"
+	"fmt"
+
+	"github.com/cpdevs/mediadevices/pkg/codec"
+	"github.com/cpdevs/mediadevices/pkg/io/video"
+	"github.com/cpdevs/mediadevices/pkg/prop"
 )
 
 // Params stores libopenh264 specific encoding parameters.
@@ -28,4 +30,8 @@ func (p *Params) RTPCodec() *codec.RTPCodec {
 // BuildVideoEncoder builds openh264 encoder with given params
 func (p *Params) BuildVideoEncoder(r video.Reader, property prop.Media) (codec.ReadCloser, error) {
 	return newEncoder(r, property, *p)
+}
+
+func CodecTest() {
+	fmt.Println("TESTINGGGGGGGGGG")
 }

@@ -8,12 +8,12 @@ import (
 	"time"
 	"unsafe"
 
+	"github.com/cpdevs/mediadevices/internal/logging"
+	"github.com/cpdevs/mediadevices/pkg/driver"
+	"github.com/cpdevs/mediadevices/pkg/io/audio"
+	"github.com/cpdevs/mediadevices/pkg/prop"
+	"github.com/cpdevs/mediadevices/pkg/wave"
 	"github.com/gen2brain/malgo"
-	"github.com/pion/mediadevices/internal/logging"
-	"github.com/pion/mediadevices/pkg/driver"
-	"github.com/pion/mediadevices/pkg/io/audio"
-	"github.com/pion/mediadevices/pkg/prop"
-	"github.com/pion/mediadevices/pkg/wave"
 )
 
 const (

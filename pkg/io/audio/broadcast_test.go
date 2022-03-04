@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/pion/mediadevices/pkg/wave"
+	"github.com/cpdevs/mediadevices/pkg/wave"
 )
 
 func TestBroadcast(t *testing.T) {

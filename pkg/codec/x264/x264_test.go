@@ -4,9 +4,9 @@ import (
 	"image"
 	"testing"
 
-	"github.com/pion/mediadevices/pkg/codec/internal/codectest"
-	"github.com/pion/mediadevices/pkg/frame"
-	"github.com/pion/mediadevices/pkg/prop"
+	"github.com/cpdevs/mediadevices/pkg/codec/internal/codectest"
+	"github.com/cpdevs/mediadevices/pkg/frame"
+	"github.com/cpdevs/mediadevices/pkg/prop"
 )
 
 func TestEncoder(t *testing.T) {
