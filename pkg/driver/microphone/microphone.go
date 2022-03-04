@@ -202,3 +202,13 @@ func (m *microphone) Properties() []prop.Media {
 	}
 	return supportedProps
 }
+
+func (m *microphone) Pause() error {
+	fmt.Println("---------PAUSE---------")
+	return nil
+}
+
+func (m *microphone) Resume() error {
+	fmt.Println("---------RESUME---------")
+	return nil
+}

@@ -36,6 +36,8 @@ type Adapter interface {
 	Open() error
 	Close() error
 	Properties() []prop.Media
+	Pause() error
+	Resume() error
 }
 
 type Driver interface {

@@ -20,6 +20,7 @@ type screen struct {
 }
 
 func init() {
+	fmt.Println("TTTTTTTTEEEEEEEEEETTTTTTTTTT")
 	activeDisplays := screenshot.NumActiveDisplays()
 	for i := 0; i < activeDisplays; i++ {
 		priority := driver.PriorityNormal
@@ -78,4 +79,17 @@ func (s *screen) Properties() []prop.Media {
 		},
 	}
 	return []prop.Media{supportedProp}
+}
+
+func (s *screen) Pause() error {
+	fmt.Println("---------PAUSE---------")
+	s.reader.Close1()
+	s.pause = true
+	return nil
+}
+
+func (s *screen) Resume() error {
+	fmt.Println("---------RESUME---------")
+	s.reader, _ = newReader(s.num)
+	s.pause = false
 }

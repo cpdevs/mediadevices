@@ -1,5 +1,7 @@
 package driver
 
+import "fmt"
+
 // FilterFn is being used to decide if a driver should be included in the
 // query result.
 type FilterFn func(Driver) bool
@@ -84,4 +86,22 @@ func (m *Manager) Query(f FilterFn) []Driver {
 	}
 
 	return results
+}
+
+func Pause(m *Manager, trackId string) {
+	fmt.Println("PAUSING ______________________________________")
+	fmt.Println(m.drivers[trackId])
+	driver := m.drivers[trackId]
+	fmt.Println(driver.Pause())
+
+	// m.drivers[0].Screen
+}
+
+func Resume(m *Manager, trackId string) {
+	fmt.Println("RESUMING ______________________________________")
+	fmt.Println(m.drivers[trackId])
+	driver := m.drivers[trackId]
+	fmt.Println(driver.Resume())
+
+	// m.drivers[0].Screen
 }

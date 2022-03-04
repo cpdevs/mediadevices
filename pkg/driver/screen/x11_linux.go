@@ -12,9 +12,13 @@ import (
 )
 
 type screen struct {
-	num    int
-	reader *reader
-	tick   *time.Ticker
+	num     int
+	reader  *reader
+	tick    *time.Ticker
+	pause   bool
+	reading bool
+	curr    time.Time
+	img     *image.RGBA
 }
 
 func deviceID(num int) string {
@@ -22,6 +26,7 @@ func deviceID(num int) string {
 }
 
 func init() {
+	//fmt.Println("--------------init CHANGED------------------------")
 	dp, err := openDisplay()
 	if err != nil {
 		// No x11 display available.
@@ -32,7 +37,9 @@ func init() {
 	for i := 0; i < numScreen; i++ {
 		driver.GetManager().Register(
 			&screen{
-				num: i,
+				num:     i,
+				pause:   false,
+				reading: false,
 			},
 			driver.Info{
 				Label:      deviceID(i),
@@ -65,12 +72,23 @@ func (s *screen) VideoRecord(p prop.Media) (video.Reader, error) {
 	}
 	s.tick = time.NewTicker(time.Duration(float32(time.Second) / p.FrameRate))
 
-	var dst image.RGBA
-	reader := s.reader
+	//reader := s.reader
 
 	r := video.ReaderFunc(func() (image.Image, func(), error) {
 		<-s.tick.C
-		return reader.Read().ToRGBA(&dst), func() {}, nil
+		for s.pause {
+			//time.Sleep(time.Millisecond * 50)
+			//fmt.Println("sleeping...cached response")
+			return s.img, func() {}, nil
+		}
+		s.reading = true
+		read := s.reader.Read()
+		var dst image.RGBA
+		img := read.ToRGBA(&dst)
+		s.img = img
+
+		s.reading = false
+		return s.img, func() {}, nil
 	})
 	return r, nil
 }
@@ -89,4 +107,39 @@ func (s *screen) Properties() []prop.Media {
 			},
 		},
 	}
+}
+
+func (s *screen) Pause() error {
+	if !s.pause {
+		s.pause = true
+		//time.Sleep(time.Millisecond * 50)
+		for s.reading {
+			fmt.Println("still in read deffering request")
+			time.Sleep(time.Millisecond * 100)
+		}
+		//time.Sleep(time.Millisecond * 50)
+
+		t := time.Now()
+		//diff := t.Sub(s.curr)
+
+		//fmt.Println("DIff e: ", diff.Milliseconds())
+		s.curr = t
+
+		//fmt.Println("---------PAUSE---------")
+		s.reader.Close()
+		return nil
+	} else {
+		fmt.Println("BROKEEEEEEEEEEEEEEN")
+		time.Sleep(time.Millisecond * 100)
+		return s.Pause()
+	}
+}
+
+func (s *screen) Resume() error {
+	//fmt.Println("---------RESUME1---------")
+	s.reader, _ = newReader(s.num)
+	//fmt.Println("---------RESUMEED---------")
+	s.pause = false
+	//fmt.Println("---------RESUMEED UNP---------")
+	return nil
 }

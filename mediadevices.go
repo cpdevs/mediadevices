@@ -44,6 +44,15 @@ func GetDisplayMedia(constraints MediaStreamConstraints) (MediaStream, error) {
 	return s, nil
 }
 
+func Pause(trackId string) {
+	fmt.Println("We are in Pause")
+	driver.Pause(driver.GetManager(), trackId)
+}
+func Resume(trackId string) {
+	fmt.Println("We are in Resume")
+	driver.Resume(driver.GetManager(), trackId)
+}
+
 // GetUserMedia prompts the user for permission to use a media input which produces a MediaStream
 // with tracks containing the requested types of media.
 // Reference: https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
